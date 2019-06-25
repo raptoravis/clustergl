@@ -6,24 +6,24 @@ UNAME := $(shell uname -s)
 NAME= cglinput
 
 #files
-SOURCES := $(wildcard src/*.cpp) 
-OBJS := $(patsubst %.cpp, %.o, $(SOURCES)) 
+SOURCES := $(wildcard src/*.cpp)
+OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
 
-OBJS_APP := $(patsubst mod_app.o,,$(OBJS)) 
-DEPS := $(wildcard include/*.h) 
+OBJS_APP := $(patsubst mod_app.o,,$(OBJS))
+DEPS := $(wildcard include/*.h)
 
 #Compiler flags. Note the arch-specific ones
-CXXFLAGS=$(ARCH) -I/opt/local/include/ -Isrc/include -O3 -Wextra -g -fPIC -fvisibility-inlines-hidden 
+CXXFLAGS=$(ARCH) -I/opt/local/include/ -Isrc/include -O3 -Wextra -g -fPIC -fvisibility-inlines-hidden
 LDFLAGS=-lconfuse -lpthread
-DARWIN_LDFLAGS= -lintl -L/opt/local/lib -lSDL
+DARWIN_LDFLAGS= -L/opt/local/lib -lSDL
 LINUX_LDFLAGS=-lSDL
 
 #Compile
 all: testprog $(OBJS) $(NAME)
-  
-$(NAME): $(OBJS) 
+
+$(NAME): $(OBJS)
 ifeq ($(UNAME),Darwin)
-	$(CXX) -shared -o ./lib$@.so $(OBJS) $(CXXFLAGS) $(LDFLAGS) $(DARWIN_LDFLAGS) 
+	$(CXX) -shared -o ./lib$@.so $(OBJS) $(CXXFLAGS) $(LDFLAGS) $(DARWIN_LDFLAGS)
 endif
 ifeq ($(UNAME),Linux)
 	$(CXX) -shared -o ./lib$@.so $(OBJS) $(CXXFLAGS) $(LDFLAGS) $(LINUX_LDFLAGS)

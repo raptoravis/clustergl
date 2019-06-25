@@ -6,7 +6,7 @@ all:
 clean:
 	$(MAKE) clean -C src
 	$(MAKE) clean -C runtime/tests
-		
+
 test:
 	cd runtime && \
 	gnome-terminal -e "./cgl-render left" && \
@@ -14,7 +14,7 @@ test:
 	gnome-terminal -e "./cgl-render right" && \
 	sleep 1 && \
 	gnome-terminal -e "./cgl-capture tests/row/row"
-	
+
 debugrender:
 	cd runtime && \
 	gdb -ex run -quiet --args ./cgl-render left
